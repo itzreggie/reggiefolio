@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/reggiefolio/static/css/main.72b3aaeb.css",
+    "main.js": "/reggiefolio/static/js/main.55b21ed1.js",
+    "static/js/453.890f308b.chunk.js": "/reggiefolio/static/js/453.890f308b.chunk.js",
+    "static/media/image2.jpeg": "/reggiefolio/static/media/image2.0d5efdf71ab9bd82627a.jpeg",
+    "static/media/reggietext.png": "/reggiefolio/static/media/reggietext.294a4ca0eff0491b76d8.png",
+    "static/media/image1.jpeg": "/reggiefolio/static/media/image1.4bfdf9f4d3556eaf2830.jpeg",
+    "static/media/image3.jpeg": "/reggiefolio/static/media/image3.a3585a20f50b48f6e18b.jpeg",
+    "index.html": "/reggiefolio/index.html",
+    "main.72b3aaeb.css.map": "/reggiefolio/static/css/main.72b3aaeb.css.map",
+    "main.55b21ed1.js.map": "/reggiefolio/static/js/main.55b21ed1.js.map",
+    "453.890f308b.chunk.js.map": "/reggiefolio/static/js/453.890f308b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.72b3aaeb.css",
+    "static/js/main.55b21ed1.js"
+  ]
+}
