@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #120b4f;
+  --secondary-color: #353A84;
+}
+
 .top-navbar {
   width: 100%;
   display: flex;
@@ -5,9 +10,7 @@
   justify-content: space-between;
   padding: 18px 80px 0 70px;
   box-sizing: border-box;
-  position: relative;
-  top: 0;
-  left: 0;
+
   margin-bottom: 0;
 }
 
@@ -18,7 +21,7 @@
 }
 
 .en-circle {
-  background: #353A84;
+  background: var(--secondary-color);
   color: #fff;
   border-radius: 50%;
   width: 38px;
@@ -36,6 +39,21 @@
   display: flex;
   justify-content: center;
   gap: 48px;
+  padding: 12px 24px;
+  width: 30%;
+  border-radius: var(--primary-border-radius);
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.nav-center.scrolled {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #fff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-link {
@@ -43,12 +61,17 @@
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, color 0.2s;
   opacity: 0.9;
 }
 
 .nav-link:hover {
   opacity: 1;
+}
+
+.nav-link.dimmed {
+  color: #b0b0b0;
+  opacity: 0.6;
 }
 
 .nav-right {
@@ -62,7 +85,7 @@
 .pdf-download {
   display: flex;
   align-items: center;
-  background: #353A84;
+  background: var(--secondary-color);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   color: white;
