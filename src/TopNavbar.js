@@ -35,6 +35,18 @@ function TopNavbar() {
           behavior: 'smooth'
         });
       }
+    } else if (sectionId === 'stack') {
+      const stackSection = document.querySelector('.stack-section');
+      if (stackSection) {
+        const navHeight = 80;
+        const elementPosition = stackSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -66,6 +78,14 @@ function TopNavbar() {
           onMouseLeave={() => setHoveredLink(null)}
         >
           About
+        </span>
+         <span 
+          className={`nav-link ${hoveredLink && hoveredLink !== 'stack' ? 'dimmed' : ''}`}
+          onClick={() => scrollToSection('stack')}
+          onMouseEnter={() => setHoveredLink('stack')}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
+          Stack
         </span>
       </div>
       <div className="nav-right">

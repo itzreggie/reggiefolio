@@ -182,7 +182,7 @@
   z-index: 1;
 }
 
-.work-selector.pending {
+.work-selector.incubator {
   transform: translateX(100%);
 }
 
@@ -277,4 +277,115 @@
   font-weight: 700;
   letter-spacing: 1px;
   pointer-events: none;
+}
+
+.stack-section {
+  width: 100%;
+  margin-top:70px;
+  text-align: center;
+}
+
+
+.stack-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.stack-tabs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--secondary-color);
+  width: 90%;
+  height: 60px;
+  border-radius: var(--primary-border-radius);
+  overflow: hidden;
+}
+
+.stack-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 2;
+  font-size: 1.1rem;
+}
+
+.stack-tab.active {
+  color: #fff;
+}
+
+.stack-tab.inactive {
+  color: #b0b0b0;
+}
+
+.stack-tab.inactive .tab-badge {
+  background-color: grey;
+}
+
+.stack-selector {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% / 7 - 4px);
+  height: calc(100% - 8px);
+  background: var(--primary-color);
+  border-radius: calc(var(--primary-border-radius) - 4px);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.stack-selector.frontend {
+  transform: translateX(100%);
+}
+
+.stack-selector.backend {
+  transform: translateX(200%);
+}
+
+.stack-selector.database {
+  transform: translateX(300%);
+}
+
+.stack-selector.server {
+  transform: translateX(400%);
+}
+
+.stack-selector.devops {
+  transform: translateX(500%);
+}
+
+.stack-selector.mobile {
+  transform: translateX(600%);
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  margin: 0 100px; 
+}
+
+.stack-item {
+  margin: 0 10px 50px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
