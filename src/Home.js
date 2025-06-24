@@ -34,20 +34,20 @@ function Home() {
     { name: "HTML", image: htmlLogo, category: "frontend" },
     { name: "CSS", image: cssLogo, category: "frontend" },
     { name: "JavaScript", image: javascriptLogo, category: "frontend" },
-    { name: "React", image: reactLogo, category: "frontend" },
+    { name: "React JS", image: reactLogo, category: "frontend" },
     { name: "Angular", image: angularlogo, category: "frontend" },
-    { name: "sass", image: sasslogo, category: "frontend" },
+    { name: "Sass", image: sasslogo, category: "frontend" },
     { name: "Bootstrap", image: bootstraplogo, category: "frontend" },
     { name: "Java", image: javaLogo, category: "backend" },
     { name: "Scala", image: scalaLogo, category: "backend" },
     { name: "Python", image: pythonLogo, category: "backend" },
-    { name: "nodejs", image: nodejslogo, category: "server" },
-    { name: "postgressql", image: sqlLogo, category: "database" },
+    { name: "Nodejs", image: nodejslogo, category: "server" },
+    { name: "PostgreSQL", image: sqlLogo, category: "database" },
     { name: "MongoDB", image: mongodblogo, category: "database" },
-    { name: "dart", image: dartlogo, category: "mobile" },
+    { name: "Dart", image: dartlogo, category: "mobile" },
     { name: "Flutter", image: flutterLogo, category: "mobile" },
-    { name: "docker", image: dockerlogo, category: "devops" },
-    { name: "git", image: gitlogo, category: "devops" },
+    { name: "Docker", image: dockerlogo, category: "devops" },
+    { name: "Git", image: gitlogo, category: "devops" },
   ];
 
   const allStacksCount = techStacks.length;
@@ -232,6 +232,7 @@ function Home() {
           {filteredTechStacks.map((stack, index) => (
             <div key={index} className="stack-item">
               <img src={stack.image} alt={stack.name} className="stack-img" />
+              <div className="stack-tooltip">{stack.name}</div>
             </div>
           ))}
         </div>

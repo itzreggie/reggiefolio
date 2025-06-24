@@ -382,10 +382,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .stack-img {
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+
+.stack-tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.stack-item:hover .stack-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
