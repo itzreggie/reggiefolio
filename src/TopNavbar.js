@@ -1,6 +1,6 @@
 import { FaRegFilePdf } from "react-icons/fa6";
 import { useState, useEffect } from "react";
-
+import CV from "./assets/CV.pdf";
 import "./styles/topnavbar.css";
 
 function TopNavbar() {
@@ -16,6 +16,15 @@ function TopNavbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = CV;
+    link.download = 'Rejoice_Ekong_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const scrollToSection = (sectionId) => {
     if (sectionId === 'home') {
@@ -73,13 +82,6 @@ function TopNavbar() {
           Work
         </span>
         <span 
-          className={`nav-link ${hoveredLink && hoveredLink !== 'about' ? 'dimmed' : ''}`}
-          onMouseEnter={() => setHoveredLink('about')}
-          onMouseLeave={() => setHoveredLink(null)}
-        >
-          About
-        </span>
-         <span 
           className={`nav-link ${hoveredLink && hoveredLink !== 'stack' ? 'dimmed' : ''}`}
           onClick={() => scrollToSection('stack')}
           onMouseEnter={() => setHoveredLink('stack')}
@@ -87,9 +89,16 @@ function TopNavbar() {
         >
           Stack
         </span>
+        <span 
+          className={`nav-link ${hoveredLink && hoveredLink !== 'about' ? 'dimmed' : ''}`}
+          onMouseEnter={() => setHoveredLink('about')}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
+          About
+        </span>
       </div>
       <div className="nav-right">
-        <span className="pdf-download">
+        <span className="pdf-download" onClick={handleDownloadCV}>
           <FaRegFilePdf size={24} />
           <span className="download-cv-text">Download CV</span>
         </span>
