@@ -1,0 +1,6 @@
+name = "reggiefolio"
+main = "worker.js"
+compatibility_date = "2023-12-01"
+
+[vars]
+GITHUB_USERNAME = "itzreggie"

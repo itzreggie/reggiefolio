@@ -1,8 +1,7 @@
 import TopNavbar from './TopNavbar'
 import reggieText from './reggietext.png'
-import image1 from './assets/image1.jpeg'
-import image2 from './assets/image2.jpeg'
-import image3 from './assets/image3.jpeg'
+import noimage from './assets/workimages/noimage.png'
+import noimagegif from './assets/workgifs/noimage.gif'
 import { useState, useEffect, useRef } from 'react'
 import pythonLogo from './assets/techstacks/python-language.png';
 import javascriptLogo from './assets/techstacks/javascript.png';
@@ -21,14 +20,61 @@ import mongodblogo from './assets/techstacks/mongo-db.png';
 import angularlogo from './assets/techstacks/angularjs.png';
 import gitlogo from './assets/techstacks/git.png';
 import dockerlogo from './assets/techstacks/docker.png';
+import { githubService } from './services/githubService';
+import { flagshipService } from './services/flagshipService';
 
 
 function Home() {
   const [activeTab, setActiveTab] = useState('flagships');
   const [activeStackTab, setActiveStackTab] = useState('all');
-  const flagshipsCount = 6;
-  const incubatorCount = 100000;
+  const [githubData, setGithubData] = useState({
+    user: null,
+    repos: [],
+    loading: true,
+    error: null
+  });
+  const [flagshipRepos, setFlagshipRepos] = useState([]);
+  const [hoveredCard, setHoveredCard] = useState(null);
   
+  const flagshipsCount = flagshipRepos.length;
+  const incubatorCount = githubData.repos.filter(repo => !flagshipRepos.includes(repo.name)).length;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setGithubData(prev => ({ ...prev, loading: true, error: null }));
+        
+        const [userData, reposData, flagshipNames] = await Promise.all([
+          githubService.getUserData(),
+          githubService.getRepositories(),
+          flagshipService.getFlagshipRepos()
+        ]);
+        
+        setGithubData({
+          user: userData,
+          repos: reposData,
+          loading: false,
+          error: null
+        });
+        
+        setFlagshipRepos(flagshipNames);
+        
+        console.log('GitHub User Data:', userData);
+        console.log('GitHub Repositories:', reposData);
+        console.log('Flagship Repos:', flagshipNames);
+        
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setGithubData(prev => ({
+          ...prev,
+          loading: false,
+          error: error.message
+        }));
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const techStacks = [
     { name: "HTML", image: htmlLogo, category: "frontend" },
@@ -61,7 +107,6 @@ function Home() {
   const flagshipsBadgeRef = useRef(null);
   const incubatorBadgeRef = useRef(null);
   
-  // Refs for stack badges
   const allStacksBadgeRef = useRef(null);
   const frontendBadgeRef = useRef(null);
   const backendBadgeRef = useRef(null);
@@ -71,7 +116,6 @@ function Home() {
   const mobileBadgeRef = useRef(null);
   
   useEffect(() => {
-    // Update data-digits attribute based on content length
     if (flagshipsBadgeRef.current) {
       const digits = flagshipsBadgeRef.current.textContent.length;
       flagshipsBadgeRef.current.setAttribute('data-digits', digits);
@@ -82,7 +126,6 @@ function Home() {
       incubatorBadgeRef.current.setAttribute('data-digits', digits);
     }
     
-    // Update data-digits for stack badges
     [
       { ref: allStacksBadgeRef, count: allStacksCount },
       { ref: frontendBadgeRef, count: frontendCount },
@@ -99,31 +142,77 @@ function Home() {
     });
   }, [flagshipsCount, incubatorCount, allStacksCount, frontendCount, backendCount, databaseCount, serverCount, devopsCount, mobileCount]);
 
-  const workCards = [
-    {
-      image: image1,
-      title: "Lorem ipsum",
-      desc: "Lorem ipsum dolor sit amet, consectetur.",
-      year: "2022"
-    },
-    {
-      image: image2,
-      title: "Ipsum",
-      desc: "Pellentesque euismod nisi eu blandit laboris minim non consectetur elit ut magna...",
-      year: "2023"
-    },
-    {
-      image: image3,
-      title: "Dolor sait",
-      desc: "Adipiscing elit, blandit erat euismod Id ad excepteur irure occat consequat nulla irure cillum qui...",
-      year: "2024"
-    }
-  ];
+  const createFlagshipCards = () => {
+    return githubData.repos
+      .filter(repo => flagshipRepos.includes(repo.name))
+      .map(repo => {
+        const repoImageName = repo.name.toLowerCase();
+        let repoImage = noimage;
+        let repoGif = noimagegif;
+        
+        try {
+          repoImage = require(`./assets/workimages/${repoImageName}.png`);
+        } catch (error) {
+          repoImage = noimage;
+        }
+        
+        try {
+          repoGif = require(`./assets/workgifs/${repoImageName}.gif`);
+        } catch (error) {
+          repoGif = noimagegif;
+        }
+        
+        return {
+          image: repoImage,
+          gif: repoGif,
+          title: repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          desc: repo.description || "There are no descriptions for this repository.",
+          year: new Date(repo.created_at).getFullYear().toString(),
+          language: repo.language,
+          stars: repo.stargazers_count
+        };
+      });
+  };
 
-  // Filter the tech stacks based on active tab
+  const createIncubatorCards = () => {
+    return githubData.repos
+      .filter(repo => !flagshipRepos.includes(repo.name))
+      .map(repo => {
+        const repoImageName = repo.name.toLowerCase();
+        let repoImage = noimage;
+        let repoGif = noimagegif;
+        
+        try {
+          repoImage = require(`./assets/workimages/${repoImageName}.png`);
+        } catch (error) {
+          repoImage = noimage;
+        }
+        
+        try {
+          repoGif = require(`./assets/workgifs/${repoImageName}.gif`);
+        } catch (error) {
+          repoGif = noimagegif;
+        }
+        
+        return {
+          image: repoImage,
+          gif: repoGif,
+          title: repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          desc: repo.description || "There are no descriptions for this repository.",
+          year: new Date(repo.created_at).getFullYear().toString(),
+          language: repo.language,
+          stars: repo.stargazers_count
+        };
+      });
+  };
+
   const filteredTechStacks = activeStackTab === 'all' ? 
     techStacks : 
     techStacks.filter(stack => stack.category === activeStackTab);
+
+  const displayCards = activeTab === 'flagships' ? createFlagshipCards() : createIncubatorCards();
+  const cardsPerRow = 3;
+  const numberOfRows = Math.ceil(displayCards.length / cardsPerRow);
 
   return (
     <div className="home">
@@ -160,22 +249,31 @@ function Home() {
         </div>
       </div>
       
-      {[...Array(3)].map((_, rowIndex) => (
+      {Array.from({ length: numberOfRows }, (_, rowIndex) => (
         <div key={rowIndex} className="work-section">
-          {workCards.map((card, cardIndex) => (
-            <div key={`${rowIndex}-${cardIndex}`} className="work-card">
-              <div className="work-card-img-container">
-                <img src={card.image} alt={`Work ${cardIndex + 1}`} className="work-card-img" />
-              </div>
-              <div className="work-card-content">
-                <div className="work-card-title">{card.title}</div>
-                <div className="work-card-desc">
-                  {card.desc}
+          {displayCards
+            .slice(rowIndex * cardsPerRow, (rowIndex + 1) * cardsPerRow)
+            .map((card, cardIndex) => (
+              <div key={`${rowIndex}-${cardIndex}`} className="work-card"
+                onMouseEnter={() => setHoveredCard(`${rowIndex}-${cardIndex}`)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="work-card-img-container">
+                  <img 
+                    src={hoveredCard === `${rowIndex}-${cardIndex}` ? card.gif : card.image}
+                    alt={`Work ${cardIndex + 1}`} 
+                    className="work-card-img" 
+                  />
                 </div>
+                <div className="work-card-content">
+                  <div className="work-card-title">{card.title}</div>
+                  <div className="work-card-desc">
+                    {card.desc}
+                  </div>
+                </div>
+                <span className="work-card-year">{card.year}</span>
               </div>
-              <span className="work-card-year">{card.year}</span>
-            </div>
-          ))}
+            ))}
         </div>
       ))}
 

@@ -8,8 +8,6 @@
 # testing
 /coverage
 
-# environment variables
-.env
 
 # misc
 .DS_Store
