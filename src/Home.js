@@ -1,5 +1,5 @@
 import TopNavbar from './TopNavbar'
-import reggieText from './reggietext.png'
+import reggieText from './assets/reggietext.png'
 import noimage from './assets/workimages/noimage.png'
 import noimagegif from './assets/workgifs/noimage.gif'
 import { useState, useEffect, useRef } from 'react'
@@ -19,9 +19,12 @@ import bootstraplogo from './assets/techstacks/bootstrap-framework.png';
 import mongodblogo from './assets/techstacks/mongo-db.png';
 import angularlogo from './assets/techstacks/angularjs.png';
 import gitlogo from './assets/techstacks/git.png';
+import typescriptlogo from './assets/techstacks/typescript.png';
+import csharplogo from './assets/techstacks/c-sharp.png';
 import dockerlogo from './assets/techstacks/docker.png';
 import { githubService } from './services/githubService';
 import { flagshipService } from './services/flagshipService';
+import { manualLanguageService } from './services/languageService';
 
 
 function Home() {
@@ -35,6 +38,7 @@ function Home() {
   });
   const [flagshipRepos, setFlagshipRepos] = useState([]);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [manualLanguages, setManualLanguages] = useState({});
   
   const flagshipsCount = flagshipRepos.length;
   const incubatorCount = githubData.repos.filter(repo => !flagshipRepos.includes(repo.name)).length;
@@ -44,10 +48,11 @@ function Home() {
       try {
         setGithubData(prev => ({ ...prev, loading: true, error: null }));
         
-        const [userData, reposData, flagshipNames] = await Promise.all([
+        const [userData, reposData, flagshipNames, languageMap] = await Promise.all([
           githubService.getUserData(),
           githubService.getRepositories(),
-          flagshipService.getFlagshipRepos()
+          flagshipService.getFlagshipRepos(),
+          manualLanguageService.getManualLanguages()
         ]);
         
         setGithubData({
@@ -58,10 +63,7 @@ function Home() {
         });
         
         setFlagshipRepos(flagshipNames);
-        
-        console.log('GitHub User Data:', userData);
-        console.log('GitHub Repositories:', reposData);
-        console.log('Flagship Repos:', flagshipNames);
+        setManualLanguages(languageMap);
         
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -84,9 +86,11 @@ function Home() {
     { name: "Angular", image: angularlogo, category: "frontend" },
     { name: "Sass", image: sasslogo, category: "frontend" },
     { name: "Bootstrap", image: bootstraplogo, category: "frontend" },
+    { name: "Typescript", image: typescriptlogo, category: "frontend" },
     { name: "Java", image: javaLogo, category: "backend" },
     { name: "Scala", image: scalaLogo, category: "backend" },
     { name: "Python", image: pythonLogo, category: "backend" },
+    { name: "C#", image: csharplogo, category: "backend" },
     { name: "Nodejs", image: nodejslogo, category: "server" },
     { name: "PostgreSQL", image: sqlLogo, category: "database" },
     { name: "MongoDB", image: mongodblogo, category: "database" },
@@ -146,7 +150,7 @@ function Home() {
     return githubData.repos
       .filter(repo => flagshipRepos.includes(repo.name))
       .map(repo => {
-        const repoImageName = repo.name.toLowerCase();
+        const repoImageName = repo.name.toLowerCase(); //here i made sure that the image name is in lowercase
         let repoImage = noimage;
         let repoGif = noimagegif;
         
@@ -162,14 +166,17 @@ function Home() {
           repoGif = noimagegif;
         }
         
+        const language = manualLanguages[repo.name] || repo.language;
+        
         return {
           image: repoImage,
           gif: repoGif,
           title: repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           desc: repo.description || "There are no descriptions for this repository.",
           year: new Date(repo.created_at).getFullYear().toString(),
-          language: repo.language,
-          stars: repo.stargazers_count
+          language: language,
+          stars: repo.stargazers_count,
+          url: repo.html_url
         };
       });
   };
@@ -194,16 +201,23 @@ function Home() {
           repoGif = noimagegif;
         }
         
+        const language = manualLanguages[repo.name] || repo.language;
+        
         return {
           image: repoImage,
           gif: repoGif,
           title: repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           desc: repo.description || "There are no descriptions for this repository.",
           year: new Date(repo.created_at).getFullYear().toString(),
-          language: repo.language,
-          stars: repo.stargazers_count
+          language: language,
+          stars: repo.stargazers_count,
+          url: repo.html_url
         };
       });
+  };
+
+  const handleCardClick = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const filteredTechStacks = activeStackTab === 'all' ? 
@@ -213,6 +227,26 @@ function Home() {
   const displayCards = activeTab === 'flagships' ? createFlagshipCards() : createIncubatorCards();
   const cardsPerRow = 3;
   const numberOfRows = Math.ceil(displayCards.length / cardsPerRow);
+
+  const getLanguageIcon = (language) => {
+    if (!language) return null;
+    
+    const langLower = language.toLowerCase();
+    
+    switch (langLower) {
+      case 'javascript': return javascriptLogo;
+      case 'python': return pythonLogo;
+      case 'java': return javaLogo;
+      case 'css': return cssLogo;
+      case 'scss': return sasslogo;
+      case 'html': return htmlLogo;
+      case 'scala': return scalaLogo;
+      case 'dart': return dartlogo;
+      case 'typescript': return typescriptlogo;
+      case 'c#': return csharplogo;
+      default: return null;
+    }
+  };
 
   return (
     <div className="home">
@@ -257,6 +291,7 @@ function Home() {
               <div key={`${rowIndex}-${cardIndex}`} className="work-card"
                 onMouseEnter={() => setHoveredCard(`${rowIndex}-${cardIndex}`)}
                 onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => handleCardClick(card.url)}
               >
                 <div className="work-card-img-container">
                   <img 
@@ -271,6 +306,15 @@ function Home() {
                     {card.desc}
                   </div>
                 </div>
+                {card.language && getLanguageIcon(card.language) && (
+                  <div className="work-card-language">
+                    <img 
+                      src={getLanguageIcon(card.language)} 
+                      alt={card.language} 
+                      className="work-card-language-img" 
+                    />
+                  </div>
+                )}
                 <span className="work-card-year">{card.year}</span>
               </div>
             ))}

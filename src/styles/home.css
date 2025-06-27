@@ -279,6 +279,21 @@
   pointer-events: none;
 }
 
+.work-card-language {
+  position: absolute;
+  left: 18px;
+  bottom: 28px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.work-card-language-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
 .stack-section {
   width: 100%;
   margin-top:70px;
