@@ -52,20 +52,40 @@ async function handleUserRequest(env, corsHeaders) {
 }
 
 async function handleReposRequest(env, corsHeaders) {
-  const response = await fetch('https://api.github.com/users/itzreggie/repos?sort=updated&per_page=50', {
-    headers: {
-      'Authorization': `token ${env.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'Reggie'
+  try {
+    const [userRepos, forwardAppRepo] = await Promise.all([
+      fetch('https://api.github.com/users/itzreggie/repos?sort=updated&per_page=50', {
+        headers: {
+          'Authorization': `token ${env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Reggie'
+        }
+      }),
+      fetch('https://api.github.com/repos/ForwardApp/ForwardApp', {
+        headers: {
+          'Authorization': `token ${env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Reggie'
+        }
+      })
+    ]);
+
+    if (!userRepos.ok) {
+      throw new Error(`GitHub API error: ${userRepos.status}`);
     }
-  });
 
-  if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.status}`);
+    const userReposData = await userRepos.json();
+    let allRepos = [...userReposData];
+
+    if (forwardAppRepo.ok) {
+      const forwardAppData = await forwardAppRepo.json();
+      allRepos.push(forwardAppData);
+    }
+
+    return new Response(JSON.stringify(allRepos), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    throw new Error(`Error fetching repositories: ${error.message}`);
   }
-
-  const data = await response.json();
-  return new Response(JSON.stringify(data), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-  });
 }

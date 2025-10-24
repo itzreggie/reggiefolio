@@ -25,6 +25,7 @@ import dockerlogo from './assets/techstacks/docker.png';
 import { githubService } from './services/githubService';
 import { flagshipService } from './services/flagshipService';
 import { manualLanguageService } from './services/languageService';
+import myImage from './assets/my-image.jpg';
 
 
 function Home() {
@@ -171,7 +172,9 @@ function Home() {
         return {
           image: repoImage,
           gif: repoGif,
-          title: repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          title: repo.name === 'ForwardApp' 
+            ? repo.name.replace(/([A-Z])/g, ' $1').replace(/^[\s_-]+|[\s_-]+$/g, '').replace(/\s+/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+            : repo.name.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           desc: repo.description || "There are no descriptions for this repository.",
           year: new Date(repo.created_at).getFullYear().toString(),
           language: language,
@@ -254,12 +257,15 @@ function Home() {
       <img src={reggieText} alt="Reggie Text" className="reggie-text-img" />
       <div className="three-box-row">
         <div className="three-box box1">
-          <span className="box1-main">Lor👋🏾,<br />ipsum dolor consectetur</span>
+          <span className="box1-main">Yo👋🏾,<br />I'm Ekong.</span>
           <span className="box1-sub">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur, blandit erat.
+            But you can call me <b>Reggie</b>. I'm a software developer that is happy when i push errors on GitHub and sometimes deploy them to production.
           </span>
         </div>
-        <div className="three-box box2">Box 2</div>
+        <div className="three-box box2">
+          <img src={myImage} alt="Profile" className="box2-img" />
+        </div>
+        { /* sittle idle from mixamo (https://www.mixamo.com/#/?page=1&query=sitting+idle) */}
         <div className="three-box box3">
           <button className="box3-btn">What do i look like?</button>
         </div>
