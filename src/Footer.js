@@ -1,14 +1,12 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaSnapchat } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { useState } from "react";
 import "./styles/footer.css";
 
 function Footer() {
-  const [showCopied, setShowCopied] = useState(false);
+  const [showCopied] = useState(false);
 
   const handleEmailClick = () => {
-    navigator.clipboard.writeText('itzreggie5678@gmail.com');
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
+    window.location.href = 'mailto:itzreggie5678@gmail.com';
   };
 
   const handleGithubClick = () => {
@@ -31,9 +29,6 @@ function Footer() {
         </div>
         <div className="footer-icon-wrapper" onClick={handleEmailClick}>
           <FaEnvelope className="footer-icon" />
-        </div>
-        <div className="footer-icon-wrapper">
-          <FaSnapchat className="footer-icon" />
         </div>
       </div>
       
