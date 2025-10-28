@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.08d2eb28.css",
-    "main.js": "/static/js/main.28f2d92c.js",
+    "main.js": "/static/js/main.390cc63e.js",
     "static/js/453.af491040.chunk.js": "/static/js/453.af491040.chunk.js",
     "static/media/sosa-website.gif": "/static/media/sosa-website.77610d13e6cf08d4b3e7.gif",
     "static/media/reggiefolio.gif": "/static/media/reggiefolio.2f16d4b5ccba533d1130.gif",
@@ -43,14 +43,14 @@
     "static/media/reggietext.png": "/static/media/reggietext.294a4ca0eff0491b76d8.png",
     "static/media/noimage.png": "/static/media/noimage.c456971e9c92e64e2031.png",
     "index.html": "/index.html",
-    "static/media/flagships.txt": "/static/media/flagships.a6b9514621a95e95cd2c.txt",
+    "static/media/flagships.txt": "/static/media/flagships.2fe0ac193860b3ab23a2.txt",
     "static/media/nolanguage.txt": "/static/media/nolanguage.a58cdba71806fbbcfe0a.txt",
     "main.08d2eb28.css.map": "/static/css/main.08d2eb28.css.map",
-    "main.28f2d92c.js.map": "/static/js/main.28f2d92c.js.map",
+    "main.390cc63e.js.map": "/static/js/main.390cc63e.js.map",
     "453.af491040.chunk.js.map": "/static/js/453.af491040.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.08d2eb28.css",
-    "static/js/main.28f2d92c.js"
+    "static/js/main.390cc63e.js"
   ]
 }
