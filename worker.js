@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   async fetch(request, env, ctx) {
     const corsHeaders = {
@@ -53,7 +54,7 @@ async function handleUserRequest(env, corsHeaders) {
 
 async function handleReposRequest(env, corsHeaders) {
   try {
-    const [userRepos, forwardAppRepo] = await Promise.all([
+    const [userRepos, forwardAppRepo, sosaWebsiteRepo, eventSyncRepo] = await Promise.all([
       fetch('https://api.github.com/users/itzreggie/repos?sort=updated&per_page=50', {
         headers: {
           'Authorization': `token ${env.GITHUB_TOKEN}`,
@@ -62,6 +63,20 @@ async function handleReposRequest(env, corsHeaders) {
         }
       }),
       fetch('https://api.github.com/repos/ForwardApp/ForwardApp', {
+        headers: {
+          'Authorization': `token ${env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Reggie'
+        }
+      }),
+      fetch('https://api.github.com/repos/SoSA-ry-Guild/sosa-website', {
+        headers: {
+          'Authorization': `token ${env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Reggie'
+        }
+      }),
+      fetch('https://api.github.com/repos/SoSA-ry-Guild/EventSync', {
         headers: {
           'Authorization': `token ${env.GITHUB_TOKEN}`,
           'Accept': 'application/vnd.github.v3+json',
@@ -80,6 +95,16 @@ async function handleReposRequest(env, corsHeaders) {
     if (forwardAppRepo.ok) {
       const forwardAppData = await forwardAppRepo.json();
       allRepos.push(forwardAppData);
+    }
+
+    if (sosaWebsiteRepo.ok) {
+      const sosaWebsiteData = await sosaWebsiteRepo.json();
+      allRepos.push(sosaWebsiteData);
+    }
+
+    if (eventSyncRepo.ok) {
+      const eventSyncData = await eventSyncRepo.json();
+      allRepos.push(eventSyncData);
     }
 
     return new Response(JSON.stringify(allRepos), {

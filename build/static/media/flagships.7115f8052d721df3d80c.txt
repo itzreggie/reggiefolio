@@ -1,9 +1,0 @@
-PUT THE ACTUAL NAME OF THE REPO AND NOT THE REFINED NAME!!!!
-
-snake_locomotion
-Client_Server_Convo
-Database_Project
-jet-shooter
-Suomi-Ethopia
-reggiefolio
-ForwardApp

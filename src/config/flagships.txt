@@ -7,3 +7,8 @@ jet-shooter
 Suomi-Ethopia
 reggiefolio
 ForwardApp
+sosa-website
+EventSync
+quukuu_customer
+quukuu_client
+quukuu_web

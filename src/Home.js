@@ -150,6 +150,7 @@ function Home() {
   const createFlagshipCards = () => {
     return githubData.repos
       .filter(repo => flagshipRepos.includes(repo.name))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .map(repo => {
         const repoImageName = repo.name.toLowerCase(); //here i made sure that the image name is in lowercase
         let repoImage = noimage;
@@ -187,6 +188,7 @@ function Home() {
   const createIncubatorCards = () => {
     return githubData.repos
       .filter(repo => !flagshipRepos.includes(repo.name))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .map(repo => {
         const repoImageName = repo.name.toLowerCase();
         let repoImage = noimage;
