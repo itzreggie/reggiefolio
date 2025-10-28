@@ -1,14 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.08d2eb28.css",
-    "main.js": "/static/js/main.0715fa82.js",
-    "static/js/453.890f308b.chunk.js": "/static/js/453.890f308b.chunk.js",
+    "main.js": "/static/js/main.b3e18256.js",
+    "static/js/453.af491040.chunk.js": "/static/js/453.af491040.chunk.js",
     "static/media/reggiefolio.gif": "/static/media/reggiefolio.2f16d4b5ccba533d1130.gif",
     "static/media/forwardapp.gif": "/static/media/forwardapp.ffa74aee66d76a649923.gif",
     "static/media/leet_codes.gif": "/static/media/leet_codes.289b1ec862f1c2f1510d.gif",
     "static/media/noimage.gif": "/static/media/noimage.aa5a42dc1f0d6e4a75bd.gif",
     "static/media/duolingo-randomer.gif": "/static/media/duolingo-randomer.7ecb5cbba4c97bbac4de.gif",
     "static/media/drums.gif": "/static/media/drums.16cafdc544fd0607200c.gif",
+    "static/media/habit_tracker.gif": "/static/media/habit_tracker.c1f13a6449e9dca28c17.gif",
     "static/media/snake_locomotion.gif": "/static/media/snake_locomotion.3fd16962444ed5e0e6f4.gif",
     "static/media/client_server_convo.gif": "/static/media/client_server_convo.74a10001ce2606dc89a2.gif",
     "static/media/CV.pdf": "/static/media/CV.63af2f7c8550721e648d.pdf",
@@ -41,11 +42,11 @@
     "static/media/flagships.txt": "/static/media/flagships.7115f8052d721df3d80c.txt",
     "static/media/nolanguage.txt": "/static/media/nolanguage.a58cdba71806fbbcfe0a.txt",
     "main.08d2eb28.css.map": "/static/css/main.08d2eb28.css.map",
-    "main.0715fa82.js.map": "/static/js/main.0715fa82.js.map",
-    "453.890f308b.chunk.js.map": "/static/js/453.890f308b.chunk.js.map"
+    "main.b3e18256.js.map": "/static/js/main.b3e18256.js.map",
+    "453.af491040.chunk.js.map": "/static/js/453.af491040.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.08d2eb28.css",
-    "static/js/main.0715fa82.js"
+    "static/js/main.b3e18256.js"
   ]
 }
